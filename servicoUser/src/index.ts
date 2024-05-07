@@ -25,10 +25,6 @@ app.use(
 // Middleware para fazer o parsing do corpo das requisições como JSON
 app.use(express.json());
 
-app.get("/test1", async (req, res) => {
-  return res.json({ message: "vc e gay" });
-});
-
 // Sincronizar o modelo com o banco de dados
 // (async () => {
 //   try {

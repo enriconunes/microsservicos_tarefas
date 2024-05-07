@@ -25,7 +25,7 @@ class CreateTaskController {
                 throw new Error("Dados da tarefa inválidos.");
             }
 
-            const response = await axios.post(`http://localhost:3001/task`, {
+            const response = await axios.post(`http://back3:3000/task`, {
                 idUser: idUser,
                 title: title,
                 description: description

@@ -18,7 +18,7 @@ class UpdateTaskDetailsController {
                 throw new Error("Dados da tarefa inválidos.");
             }
 
-            const response = await axios.put(`http://localhost:3001/task`, {
+            const response = await axios.put(`http://back3:3000/task`, {
                 id: id,
                 title: title,
                 description: description

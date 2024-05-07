@@ -22,7 +22,7 @@ class AuthUserController {
                 throw new Error("Credenciais inválidas!")
             }
 
-            const response = await axios.post('http://localhost:3000/auth', {
+            const response = await axios.post('http://back2:3000/auth', {
                 email: email,
                 password: password
             });

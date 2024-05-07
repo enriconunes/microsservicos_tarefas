@@ -9,7 +9,6 @@ COPY package*.json ./
 
 # Instala as dependências do projeto
 RUN npm install
-# RUN npm rebuild bcrypt
 
 # Copia todos os arquivos do diretório atual (/back) para /app no contêiner
 COPY . .

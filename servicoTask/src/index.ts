@@ -14,7 +14,13 @@ const app: Express = express();
 const port = process.env.PORT;
 
 // Configurar acesso a rota por diferentes origens
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 // Middleware para fazer o parsing do corpo das requisições como JSON
 app.use(express.json());

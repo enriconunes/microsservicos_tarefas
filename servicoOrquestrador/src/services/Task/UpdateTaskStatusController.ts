@@ -17,7 +17,7 @@ class UpdateTaskStatusController {
                 throw new Error("Erro na leitura dos dados.");
             }
 
-            const response = await axios.put(`http://localhost:3001/status`, {
+            const response = await axios.put(`http://back3:3000/status`, {
                 id: id,
                 status: status,
             });

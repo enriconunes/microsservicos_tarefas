@@ -14,7 +14,7 @@ class ListTasksController {
                 throw new Error("Erro ao identificar ID do usuário.");
             }
 
-            const response = await axios.get(`http://localhost:3001/task?idUser=${idUser}`);
+            const response = await axios.get(`http://back3:3000/task?idUser=${idUser}`);
 
             return res.status(200).json(response.data)
 

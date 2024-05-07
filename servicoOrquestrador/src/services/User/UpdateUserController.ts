@@ -20,7 +20,7 @@ class UpdateUserController {
                 throw new Error("Dados incompletos!")
             }
 
-            const response = await axios.put('http://localhost:3000/update', {
+            const response = await axios.put('http://back2:3000/update', {
                 id: idUser,
                 name: name,
             });

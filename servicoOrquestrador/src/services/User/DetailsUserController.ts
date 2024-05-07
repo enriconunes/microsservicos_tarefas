@@ -13,7 +13,7 @@ class DetailsUserController {
       }
 
       const response = await axios.get(
-        `http://localhost:3000/user/?id=${idUser}`
+        `http://back2:3000/user/?id=${idUser}`
       );
 
       return res.status(200).json(response.data);

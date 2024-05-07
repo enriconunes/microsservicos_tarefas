@@ -30,12 +30,6 @@ app.use(cors());
 // Middleware para fazer o parsing do corpo das requisições como JSON
 app.use(express.json());
 
-app.get("/test1", async (req, res) => {
-  const data: any = await axios.get("http://back2:3000/test1");
-
-  return res.json(data.data);
-});
-
 // Definição de rotas e instancias de classes
 // Orquestração serviços User
 app.post("/user/auth", new AuthUserController().handle);
@@ -46,16 +40,8 @@ app.get("/user/user", isAuthenticated, new DetailsUserController().handle);
 // Orquestração serviços Task
 app.post("/task/task", isAuthenticated, new CreateTaskController().handle);
 app.get("/task/task", isAuthenticated, new ListTasksController().handle);
-app.put(
-  "/task/task",
-  isAuthenticated,
-  new UpdateTaskDetailsController().handle
-);
-app.put(
-  "/task/status",
-  isAuthenticated,
-  new UpdateTaskStatusController().handle
-);
+app.put("/task/task", isAuthenticated, new UpdateTaskDetailsController().handle);
+app.put("/task/status", isAuthenticated, new UpdateTaskStatusController().handle);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

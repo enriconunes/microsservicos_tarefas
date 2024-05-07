@@ -1,0 +1,96 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ams_user
+      MYSQLD_MAX_CONNECTIONS: 1
+    restart: always
+    ports:
+      - "3306:3306"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: "0.3GB"
+    volumes:
+      - ./db_volume:/docker-entrypoint-initdb.d
+
+  mysql2:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ams_task
+      MYSQLD_MAX_CONNECTIONS: 1
+    restart: always
+    ports:
+      - "3307:3306"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: "0.1GB"
+    volumes:
+      - ./db_volume2:/docker-entrypoint-initdb.d
+
+  back:
+    build: ./servicoOrquestrador
+    restart: unless-stopped
+    ports:
+      - "4000:3000"
+    environment:
+      PORT: 4000
+      JWT_SECRET_MD5: senhaSecretaJWT
+    volumes:
+      - ./servicoOrquestrador:/app
+      - /app/node_modules
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: "0.1GB"
+
+  back2:
+    build: ./servicoUser
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      DB_HOST: localhost
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: ams_user
+    depends_on:
+      - mysql
+    volumes:
+      - ./servicoUser:/app
+      - /app/node_modules
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: "0.1GB"
+
+  back3:
+    build: ./servicoTask
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      PORT: 3001
+      DB_HOST: localhos
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: ams_task
+    depends_on:
+      - mysql2
+    volumes:
+      - ./servicoTask:/app
+      - /app/node_modules
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: "0.1GB"

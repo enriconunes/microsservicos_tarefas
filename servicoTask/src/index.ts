@@ -36,7 +36,8 @@ app.get('/task', new ListTasksService().handle)
 app.put('/task', new UpdateTaskDetailsService().handle)
 app.put('/status', new UpdateTaskStatusService().handle)
 
+console.log("Porta: ", port)
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
-});
+});  

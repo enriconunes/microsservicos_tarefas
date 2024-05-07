@@ -1,11 +1,9 @@
-version: "3.8"
 services:
   mysql:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: ams_user
-      MYSQLD_MAX_CONNECTIONS: 1
     restart: always
     ports:
       - "3306:3306"
@@ -22,25 +20,25 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: ams_task
-      MYSQLD_MAX_CONNECTIONS: 1
     restart: always
     ports:
       - "3307:3306"
     deploy:
       resources:
         limits:
-          cpus: "0.1"
-          memory: "0.1GB"
+          cpus: "0.2"
+          memory: "0.3GB"
     volumes:
       - ./db_volume2:/docker-entrypoint-initdb.d
 
   back:
     build: ./servicoOrquestrador
+    # image: node:16
     restart: unless-stopped
     ports:
-      - "4000:3000"
+      - "3000:3000"
     environment:
-      PORT: 4000
+      PORT: 3000
       JWT_SECRET_MD5: senhaSecretaJWT
     volumes:
       - ./servicoOrquestrador:/app
@@ -48,17 +46,17 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.1"
-          memory: "0.1GB"
+          cpus: "0.5"
+          memory: "0.5GB"
 
   back2:
     build: ./servicoUser
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       PORT: 3000
-      DB_HOST: localhost
+      DB_HOST: mysql
       DB_USER: root
       DB_PASSWORD: root
       DB_NAME: ams_user
@@ -70,17 +68,17 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.1"
-          memory: "0.1GB"
+          cpus: "0.5"
+          memory: "0.5GB"
 
   back3:
     build: ./servicoTask
     restart: unless-stopped
     ports:
-      - "3001:3000"
+      - "3002:3000"
     environment:
-      PORT: 3001
-      DB_HOST: localhos
+      PORT: 3000
+      DB_HOST: mysql2
       DB_USER: root
       DB_PASSWORD: root
       DB_NAME: ams_task
@@ -92,5 +90,5 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.1"
-          memory: "0.1GB"
+          cpus: "0.5"
+          memory: "0.5GB"

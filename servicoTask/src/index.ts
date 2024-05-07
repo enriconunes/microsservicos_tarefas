@@ -1,5 +1,4 @@
-import express, { Express, Request, Response, NextFunction } from "express";
-import { sequelize } from "./sequelize/sequelize";
+import express, { Express } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 
@@ -15,7 +14,7 @@ const app: Express = express();
 const port = process.env.PORT;
 
 // Configurar acesso a rota por diferentes origens
-app.use(cors())
+app.use(cors());
 
 // Middleware para fazer o parsing do corpo das requisições como JSON
 app.use(express.json());
@@ -24,20 +23,20 @@ app.use(express.json());
 // (async () => {
 //   try {
 //     await sequelize.sync({ force: true });
-//     console.log('Tabela criada com sucesso!');
+//     console.log("Tabela criada com sucesso!");
 //   } catch (error) {
-//     console.error('Erro ao sincronizar o modelo com o banco de dados:', error);
+//     console.error("Erro ao sincronizar o modelo com o banco de dados:", error);
 //   }
 // })();
 
 // Definição de rotas e instancias de classes
-app.post('/task', new CreateTaskService().handle)
-app.get('/task', new ListTasksService().handle)
-app.put('/task', new UpdateTaskDetailsService().handle)
-app.put('/status', new UpdateTaskStatusService().handle)
+app.post("/task", new CreateTaskService().handle);
+app.get("/task", new ListTasksService().handle);
+app.put("/task", new UpdateTaskDetailsService().handle);
+app.put("/status", new UpdateTaskStatusService().handle);
 
-console.log("Porta: ", port)
+console.log("Porta: ", port);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
-});  
+});

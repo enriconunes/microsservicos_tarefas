@@ -1,32 +1,28 @@
 import { Request, Response } from "express";
-import axios from 'axios';
+import axios from "axios";
 
 class DetailsUserController {
+  async handle(req: Request, res: Response) {
+    try {
+      // recuperar o token definido na requisicao pelo middleware de autenticacao
+      // essa é uma rota privada, por isso tem acesso ao req.idUser definido no middleware
+      const idUser = req.idUser as string;
 
-    async handle(req: Request, res: Response) {
-        try {
+      if (!idUser) {
+        throw new Error("Erro ao identificar ID do usuário.");
+      }
 
-            // recuperar o token definido na requisicao pelo middleware de autenticacao
-            // essa é uma rota privada, por isso tem acesso ao req.idUser definido no middleware
-            const idUser = req.idUser as string
+      const response = await axios.get(
+        `http://localhost:3000/user/?id=${idUser}`
+      );
 
-            if (!idUser) {
-                throw new Error("Erro ao identificar ID do usuário.");
-            }
-
-            const response = await axios.get(`http://localhost:3000/user/?id=${idUser}`);
-
-            return res.status(200).json(response.data)
-
-        } catch (error) {
-
-            return res.status(400).json({
-                message: `${error.response.data.message}`
-            })
-
-        }
+      return res.status(200).json(response.data);
+    } catch (error) {
+      return res.status(400).json({
+        message: `${error.response.data.message}`,
+      });
     }
-
+  }
 }
 
-export { DetailsUserController }
+export { DetailsUserController };
